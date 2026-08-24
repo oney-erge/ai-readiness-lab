@@ -313,7 +313,7 @@ technical-leader checklist. See `docs/IMPLEMENTATION_PLAN.md` Phase 7.
 
 **Done:**
 - **Git identity fix (user-reported):** all prior commits were authored/committed as
-  `Claude <noreply@anthropic.com>`. Set `git config` to `iodriller <oneyerge@gmail.com>`,
+  `Claude <noreply@anthropic.com>`. Set `git config` to `oney-erge <oneyerge@gmail.com>`,
   rewrote the whole branch history to the owner identity, and added the MANDATORY git-identity
   rule to Repository etiquette above. The GitHub contributor is now the owner, never Claude.
 - **Gap 1 (official-site classification):** `source_ranker.resolve_company_domain()` matches the
@@ -724,7 +724,7 @@ npm test                           # vitest run
 
 - Working branch: `claude/claude-md-best-practices-b31l7x`.
 - **Git identity (MANDATORY):** every commit MUST be authored AND committed as the repo
-  owner — `git config user.name "iodriller"` and `git config user.email "oneyerge@gmail.com"`.
+  owner — `git config user.name "oney-erge"` and `git config user.email "oneyerge@gmail.com"`.
   NEVER commit as `Claude <noreply@anthropic.com>` or any Anthropic identity. The contributor
   shown on GitHub must be the owner, not Claude. Verify with `git log --format='%an <%ae>'`
   before pushing; if any commit on the branch shows Claude as author/committer, rewrite it.
