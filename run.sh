@@ -22,11 +22,21 @@ ensure_node(){
 check(){ if command -v curl>/dev/null 2>&1;then curl -fsS --max-time 2 "$url/health">/dev/null;else wget -qO- --timeout=2 "$url/health">/dev/null;fi;}
 wait_ready(){ for _ in $(seq 1 120);do check 2>/dev/null&&return;sleep .5;done;return 1;}
 open_url(){ [ "$no_browser" -eq 1 ]&&return;command -v open>/dev/null 2>&1&&open "$url"||command -v xdg-open>/dev/null 2>&1&&xdg-open "$url"||true;}
-case "$action" in docker|stop|logs)command -v docker>/dev/null 2>&1||{ echo "Docker is not installed." >&2;exit 1;};docker info>/dev/null 2>&1||{ echo "Docker engine is not running." >&2;exit 1;};[ "$action" = stop ]&&exec docker compose down;[ "$action" = logs ]&&exec docker compose logs --follow;docker compose up -d --build;wait_ready||{ docker compose logs;exit 1;};echo "AI Readiness Lab is ready at $url";open_url;exit 0;;esac
+case "$action" in docker|stop|logs)
+  if ! command -v docker>/dev/null 2>&1||! docker info>/dev/null 2>&1;then
+    [ "$action" = stop ]&&{ echo "The native server runs in the foreground. Press Ctrl+C in its terminal to stop it.";exit 0;}
+    [ "$action" = logs ]&&{ echo "The native server writes logs to its foreground terminal.";exit 0;}
+    command -v docker>/dev/null 2>&1||{ echo "Docker is not installed." >&2;exit 1;}
+    echo "Docker engine is not running." >&2;exit 1
+  fi
+  [ "$action" = stop ]&&exec docker compose down
+  [ "$action" = logs ]&&exec docker compose logs --follow
+  docker compose up -d --build;wait_ready||{ docker compose logs;exit 1;};echo "AI Readiness Lab is ready at $url";open_url;exit 0;;
+esac
 if [ "$action" = doctor ];then [ -x .venv/bin/python ]&&[ -f frontend/dist/index.html ]||{ echo "Environment incomplete. Run ./run.sh once." >&2;exit 1;};check 2>/dev/null&&echo "Server: $url"||echo "Server: not running";exit 0;fi
-uv=$(find_uv||true);[ -n "$uv" ]||uv=$(install_uv);"$uv" python install 3.11;[ -x .venv/bin/python ]||"$uv" venv --python 3.11 .venv
+uv=$(find_uv||true);[ -n "$uv" ]||uv=$(install_uv);retry "Python installation" "$uv" python install 3.11;[ -x .venv/bin/python ]||"$uv" venv --python 3.11 .venv
 pip_args=(pip install --python .venv/bin/python --requirement backend/requirements-desktop.txt);[ "$action" = repair ]&&pip_args+=(--reinstall);retry "Python dependency synchronization" "$uv" "${pip_args[@]}"
-npm=$(ensure_node);export PATH="$(dirname "$npm"):$PATH";if command -v sha256sum>/dev/null 2>&1;then hash=$(sha256sum frontend/package-lock.json|cut -d' ' -f1);else hash=$(shasum -a 256 frontend/package-lock.json|cut -d' ' -f1);fi;stored=$(cat frontend/node_modules/.airl-build 2>/dev/null||true);if [ "$action" = repair ]||[ "$stored" != "$hash" ]||[ ! -f frontend/dist/index.html ];then(cd frontend&&retry "frontend dependency installation" "$npm" ci&&"$npm" run build);printf %s "$hash">frontend/node_modules/.airl-build;fi
+npm=$(ensure_node);export PATH="$(dirname "$npm"):$PATH";if command -v sha256sum>/dev/null 2>&1;then hash=$(sha256sum frontend/package-lock.json|cut -d' ' -f1);else hash=$(shasum -a 256 frontend/package-lock.json|cut -d' ' -f1);fi;fingerprint="$hash|node=$node_version";stored=$(cat frontend/node_modules/.airl-build 2>/dev/null||true);if [ "$action" = repair ]||[ "$stored" != "$fingerprint" ]||[ ! -f frontend/dist/index.html ];then(cd frontend&&retry "frontend dependency installation" "$npm" ci&&"$npm" run build);printf %s "$fingerprint">frontend/node_modules/.airl-build;fi
 export PYTHONPATH="$PWD/backend"
 if [ "$no_browser" -eq 1 ];then cd backend;exec ../.venv/bin/python -m uvicorn app.main:app --host 127.0.0.1 --port 8123;fi
 exec .venv/bin/python desktop/launcher.py

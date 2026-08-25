@@ -6,6 +6,30 @@ on:
   pull_request:
 
 jobs:
+  delivery:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Check launcher syntax
+        shell: pwsh
+        run: |
+          bash -n run.sh run.command
+          shellcheck --severity=error run.sh run.command
+          $errors = $null
+          [void][System.Management.Automation.Language.Parser]::ParseFile((Resolve-Path run.ps1), [ref]$null, [ref]$errors)
+          if ($errors.Count) { $errors | Format-List | Out-String | Write-Error }
+      - name: Start the application
+        run: docker compose up --detach --build
+      - name: Wait for readiness
+        run: curl --fail --retry 60 --retry-all-errors --retry-delay 2 http://127.0.0.1:8123/health
+      - name: Show container logs on failure
+        if: failure()
+        run: docker compose logs
+      - name: Stop containers
+        if: always()
+        run: docker compose down --volumes
+
   backend:
     name: Backend — lint + test
     runs-on: ubuntu-latest

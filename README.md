@@ -7,6 +7,14 @@ practical enterprise AI pilots, scores readiness, and generates executive-ready 
 > practical AI pilots, score readiness, and turn one selected idea into a scoped, risk-aware,
 > technically grounded plan.
 
+## Run from source
+
+Use `run.bat` on Windows, `run.command` on macOS, or `run.sh` on Linux. The
+launcher installs a pinned Python toolchain and Node.js when needed, builds the
+interface only when its lockfile changes, waits for the backend health check,
+and opens the app. Re-run it safely at any time. It also accepts `doctor`,
+`repair`, `docker`, `logs`, and `stop`.
+
 ## Download & run (no Python needed)
 
 AI Readiness Lab ships as a double-clickable desktop app — no Python, Node, or terminal required.

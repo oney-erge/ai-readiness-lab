@@ -1,0 +1,10 @@
+services:
+  app:
+    build: .
+    image: ai-readiness-lab:local
+    init: true
+    restart: unless-stopped
+    ports: ["127.0.0.1:${AIRL_PORT:-8123}:8123"]
+    volumes: ["airl-data:/data"]
+volumes:
+  airl-data:
