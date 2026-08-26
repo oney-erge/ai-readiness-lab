@@ -15,6 +15,18 @@ interface only when its lockfile changes, waits for the backend health check,
 and opens the app. Re-run it safely at any time. It also accepts `doctor`,
 `repair`, `docker`, `logs`, and `stop`.
 
+```powershell
+.\run.bat          # Windows
+```
+
+```bash
+./run.command      # macOS
+./run.sh           # Linux
+```
+
+Use `.\run.ps1` from PowerShell. Add an action after the launcher, such as
+`.\run.ps1 doctor` or `./run.sh docker`.
+
 ## Download & run (no Python needed)
 
 AI Readiness Lab ships as a double-clickable desktop app — no Python, Node, or terminal required.
