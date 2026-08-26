@@ -27,6 +27,10 @@ and opens the app. Re-run it safely at any time. It also accepts `doctor`,
 Use `.\run.ps1` from PowerShell. Add an action after the launcher, such as
 `.\run.ps1 doctor` or `./run.sh docker`.
 
+Setup checks disk space, prevents concurrent dependency and frontend changes,
+retries temporary network failures up to three times, and records failures in
+`.setup/install.log`.
+
 ## Download & run (no Python needed)
 
 AI Readiness Lab ships as a double-clickable desktop app — no Python, Node, or terminal required.
