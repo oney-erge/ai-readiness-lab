@@ -8,7 +8,7 @@ anthropic==0.109.1
 tavily-python==0.7.26
 duckduckgo-search==8.1.1
 keyring==25.5.0
-fpdf2==2.8.1
+fpdf2==2.8.8
 
 # Testing
 pytest==9.1.1
