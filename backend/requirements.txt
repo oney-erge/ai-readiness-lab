@@ -7,7 +7,7 @@ sqlalchemy==2.0.36
 anthropic==0.109.1
 tavily-python==0.7.26
 duckduckgo-search==8.1.1
-keyring==25.5.0
+keyring==25.7.0
 fpdf2==2.8.1
 
 # Testing
