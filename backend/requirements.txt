@@ -22,4 +22,4 @@ ruff==0.8.4
 # Browser UI diagnosis: launch the app and drive the frontend in headless Chromium.
 # After installing, fetch the browser once:  python -m playwright install chromium
 # UI tests skip cleanly if Playwright or its browser is absent.
-playwright>=1.40
+playwright>=1.62.0
