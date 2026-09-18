@@ -14,7 +14,7 @@ fpdf2==2.8.1
 pytest==9.1.1
 pytest-asyncio==1.4.0
 httpx==0.28.1
-httpx2==2.12.0
+httpx2==2.13.0
 
 # Linting / formatting
 ruff==0.8.4
