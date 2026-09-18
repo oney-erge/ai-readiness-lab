@@ -1,13 +1,13 @@
 # Runtime
 fastapi==0.141.1
-uvicorn[standard]==0.32.1
-pydantic==2.10.3
+uvicorn[standard]==0.53.0
+pydantic==2.13.5
 pydantic-settings==2.15.0
-sqlalchemy==2.0.36
+sqlalchemy==2.0.53
 anthropic==1.5.0
-tavily-python==0.7.26
+tavily-python==0.8.3
 duckduckgo-search==8.1.1
-keyring==25.5.0
+keyring==25.7.0
 fpdf2==2.8.8
 
 # Testing
@@ -17,7 +17,7 @@ httpx==0.28.1
 httpx2==2.13.0
 
 # Linting / formatting
-ruff==0.8.4
+ruff==0.16.7
 
 # Browser UI diagnosis: launch the app and drive the frontend in headless Chromium.
 # After installing, fetch the browser once:  python -m playwright install chromium
