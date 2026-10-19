@@ -1,10 +1,10 @@
 # Runtime
-fastapi==0.143.0
+fastapi==0.143.2
 uvicorn[standard]==0.54.0
-pydantic==2.14.0
-pydantic-settings==2.15.0
+pydantic==2.14.1
+pydantic-settings==2.16.0
 sqlalchemy==2.1.4
-anthropic==1.12.1
+anthropic==1.15.0
 tavily-python==0.8.5
 duckduckgo-search==8.1.1
 keyring==25.7.0
@@ -17,7 +17,7 @@ httpx==0.28.1
 httpx2==2.13.1
 
 # Linting / formatting
-ruff==0.16.10
+ruff==0.17.1
 
 # Browser UI diagnosis: launch the app and drive the frontend in headless Chromium.
 # After installing, fetch the browser once:  python -m playwright install chromium
