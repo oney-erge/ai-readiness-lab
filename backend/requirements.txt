@@ -4,7 +4,7 @@ uvicorn[standard]==0.54.0
 pydantic==2.14.1
 pydantic-settings==2.16.1
 sqlalchemy==2.1.6
-anthropic==1.12.1
+anthropic==2.3.0
 tavily-python==0.8.5
 duckduckgo-search==8.1.1
 keyring==25.7.0
