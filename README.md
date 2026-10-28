@@ -31,9 +31,11 @@ Setup checks disk space, prevents concurrent dependency and frontend changes,
 retries temporary network failures up to three times, and records failures in
 `.setup/install.log`.
 
-## Download & run (no Python needed)
+## Desktop app (no Python needed)
 
-AI Readiness Lab ships as a double-clickable desktop app — no Python, Node, or terminal required.
+The release workflow packages AI Readiness Lab as a double-clickable desktop app, so no
+Python, Node or terminal is required. No release has been published yet; until then, run
+from source above or build the app yourself (below).
 
 1. Download the installer for your platform from the [latest release](../../releases/latest):
    - **Windows** — `ai-readiness-lab-windows.zip` → unzip → run `AI Readiness Lab.exe`
@@ -87,3 +89,7 @@ python -m playwright install chromium
 The backend test suite includes UI smoke tests that launch the real FastAPI app in a thread
 and drive the frontend in headless Chromium. They skip cleanly if Playwright or its browser
 isn't installed, so a plain `pytest` run works on any fresh checkout.
+
+## License
+
+[MIT](LICENSE)
