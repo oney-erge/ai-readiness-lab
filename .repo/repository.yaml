@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "repository": {"id": "oney-erge/ai-readiness-lab", "owner": "oney-erge", "maintenance": "unclassified", "interfaces": ["browser-ui", "api"]},
+  "capabilities": ["async-jobs", "persistent-data", "external-effects"],
+  "components": [{"id": "backend", "root": "backend"}, {"id": "frontend", "root": "frontend"}],
+  "checks": {
+    "research-report": {"argv": ["python", "-m", "pytest", "tests/test_report.py", "tests/test_source_ranker.py", "-q"], "cwd": "backend", "timeout_seconds": 180, "effects": "local-test-files"},
+    "frontend-types": {"argv": ["npm", "run", "typecheck"], "cwd": "frontend", "timeout_seconds": 180, "effects": "local-cache"}
+  },
+  "journeys": [{"id": "evidence-to-report", "user_outcome": "Inspect research evidence and generate a useful report with visible uncertainty", "checks": ["research-report", "frontend-types"], "additional_evidence_needed": ["fixture research-to-report browser flow", "missing and stale sources", "accessibility review", "live research only with explicit scope"]}],
+  "state": {"owner": "backend/app", "invariant": "Claims must retain sources and confidence; sample data must remain distinct from live research."},
+  "evidence": {"status": "not-collected-by-repoctl"},
+  "agent": {"instruction_entry": "AGENTS.md", "command_trust": "external-to-repository"}
+}
